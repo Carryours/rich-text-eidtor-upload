@@ -9,10 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^5",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.7.7",
     "quill": "^2.0.2",
+    "tinymce": "^7",
     "vue": "^3.5.12",
     "vue-router": "^4.4.5"
   },

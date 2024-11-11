@@ -9,79 +9,59 @@ onMounted(() => {
     theme: 'snow'
   });
 
-  // quill.clipboard.addMatcher('img', (node, deltal) => {
-  //   // 获取blob
-  //   const src = node.src;
-
-  //   // 使用 fetch 获取图像并将其转为 Blob
-  //   async function getBlob(src) {
-  //     const res = await fetch(src);
-  //     const blob = res.blob();
-  //     return blob;
-  //   }
-
-  //   async function upload(blob) {
-  //     const file = new File([blob], 'converted_image.png', { type: blob.type });
-  //     const formData = new FormData();
-  //     formData.append('image', file);
-  //     let { data } = await axios.post('/upload', formData, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data'
-  //       }
-  //     })
-  //     deltal.ops[0].insert.image = `localhost:3000/${data.fileName}`
-  //     return deltal;
-  //   }
-
-  //   const blob = getBlob(src);
-  //   upload(blob);
-  //   return deltal;
-  //   // 替换src
-  // })
-
-  // 添加粘贴匹配器
-  quill.clipboard.addMatcher('img', (node, delta) => {
+  quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, deltal) => {
+    // 获取blob
     const src = node.src;
+    var imgs = node.getElementsByTagName('img');
+    if (imgs.length > 0) {
+      for (let i = 0; i < imgs.length; i++) {
 
-    // 需要在后续操作中处理异步上传
-    setTimeout(() => {
-      handleImageUpload(src, delta);
-    }, 0); // 使用 setTimeout 以便后续处理
-
-    return delta;  // 立即返回原始 delta
-  });
-  function handleImageUpload(src, delta) {
-    fetchImageAsBlob(src).then(blob => {
-      return uploadImage(blob);  // 上传并返回新的 URL
-    }).then(newSrc => {
-      // 更新 Delta 的图像源
-      delta.ops[0].insert.image = newSrc;  // 使用新图像的 URL
-      quill.setContents(delta);  // 更新 Quill 内容
-    }).catch(err => {
-      console.error('Error uploading image:', err);
-    });
-  }
-  // 获取图像并转换为 Blob
-  async function fetchImageAsBlob(src) {
-    const response = await fetch(src);
-    if (!response.ok) throw new Error('Could not fetch image.');
-    return response.blob();  // 返回 Blob
-  }
-
-  // 上传 Blob 并获得新图像的 URL
-  async function uploadImage(blob) {
-    const file = new File([blob], 'image.png', { type: blob.type });
-    const formData = new FormData();
-    formData.append('image', file);  // 后端接收的字段名
-
-    // 使用 Axios 上传文件
-    const { data } = await axios.post('/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
+        getBlob(src).then(blob => {
+          upload(blob).then(destSrc => {
+            imgs[i].setAttribute('src', destSrc);
+            console.log(imgs[i])
+          });
+        });
       }
-    });
-    return `http://localhost:3000/${data.fileName}`;  // 假设后端返回 fileName
-  }
+    }
+    // 使用 fetch 获取图像并将其转为 Blob
+    async function getBlob(src) {
+      const res = await fetch(src);
+      const blob = res.blob();
+      return blob;
+    }
+
+    async function upload(blob) {
+      const file = new File([blob], 'converted_image.png', { type: blob.type });
+      const formData = new FormData();
+      formData.append('image', file);
+      let { data } = await axios.post('/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      return `localhost:3000/${data.fileName}`
+    }
+
+    return deltal;
+    // 替换src
+  })
+
+  // // 添加粘贴匹配器
+  // quill.clipboard.addMatcher(Node.ELEMENT_NODE, function (node, delta) {
+  //   var imgs = node.getElementsByTagName('img');
+  //   if (imgs.length > 0) {
+  //     for (var i = 0; i < imgs.length; i++) {
+  //       // Replace each image src with the uploaded image URL
+  //       handleImageUpload(imgs[i].getAttribute('src')).then(newUrl => {
+  //         imgs[i].setAttribute('src', newUrl);
+  //       }).catch((error) => {
+  //         console.error('Image upload failed: ', error);
+  //       });
+  //     }
+  //   }
+  //   return delta;
+  // });
 
 })
 const handleClick = () => {

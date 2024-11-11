@@ -26,8 +26,12 @@ const router = createRouter({
       path: '/quill-editor',
       name: 'quillEditor',
       component: () => import('../views/Quill.vue')
+    },
+    {
+      path: '/tinymce',
+      name: 'tinymce',
+      component: () => import('../views/Tinymce.vue')
     }
-
   ]
 })
 

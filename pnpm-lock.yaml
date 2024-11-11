@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@tinymce/tinymce-vue':
+        specifier: ^5
+        version: 5.1.1(vue@3.5.12)
       '@wangeditor/editor':
         specifier: ^5.1.23
         version: 5.1.23
@@ -20,6 +23,9 @@ importers:
       quill:
         specifier: ^2.0.2
         version: 2.0.2
+      tinymce:
+        specifier: ^7
+        version: 7.5.0
       vue:
         specifier: ^3.5.12
         version: 3.5.12
@@ -414,6 +420,11 @@ packages:
     resolution: {integrity: sha512-HGZgRFFYrMrP3TJlq58nR1xy8zHKId25vhmm5S9jETEfDf6xybPxsavFTJaufe2zgOGYJBskGlj49CwtEuFhWQ==}
     cpu: [x64]
     os: [win32]
+
+  '@tinymce/tinymce-vue@5.1.1':
+    resolution: {integrity: sha512-iO57HOWesFOhsaqjA5Ea6sDvQBmJJH3/dq00Uvg7metlct2kLF+ctRgoDsetLt6gmeZ7COPftr814/XzqnJ/dg==}
+    peerDependencies:
+      vue: ^3.0.0
 
   '@transloadit/prettier-bytes@0.0.7':
     resolution: {integrity: sha512-VeJbUb0wEKbcwaSlj5n+LscBl9IPgLPkHVGBkh00cztv6X4L/TJXK58LzFuBKX7/GAfiGhIwH67YTLTlzvIzBA==}
@@ -871,6 +882,12 @@ packages:
   tiny-warning@1.0.3:
     resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
 
+  tinymce@6.8.5:
+    resolution: {integrity: sha512-qAL/FxL7cwZHj4BfaF818zeJJizK9jU5IQzTcSLL4Rj5MaJdiVblEj7aDr80VCV1w9h4Lak9hlnALhq/kVtN1g==}
+
+  tinymce@7.5.0:
+    resolution: {integrity: sha512-A7iuQPIfeze5rO6bvnnPwP7TiWnPA9AGr8U/9ssLwrEG+FMYPzvLPt3RT8ktVn/wPSJkVBBSLCAZX2dAHb8YEA==}
+
   type@2.7.3:
     resolution: {integrity: sha512-8j+1QmAbPvLZow5Qpi6NCaN8FB60p/6x8/vfNqOk/hC+HuvFZhL4+WfekuhQLiqFZXOgQdrs3B+XxEmCc6b3FQ==}
 
@@ -1245,6 +1262,11 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.24.3':
     optional: true
+
+  '@tinymce/tinymce-vue@5.1.1(vue@3.5.12)':
+    dependencies:
+      tinymce: 6.8.5
+      vue: 3.5.12
 
   '@transloadit/prettier-bytes@0.0.7': {}
 
@@ -1768,6 +1790,10 @@ snapshots:
   svg-tags@1.0.0: {}
 
   tiny-warning@1.0.3: {}
+
+  tinymce@6.8.5: {}
+
+  tinymce@7.5.0: {}
 
   type@2.7.3: {}
 
